@@ -226,7 +226,7 @@ function renderAllShapes() {
 
   var hat = new Prism();
   hat.color = [0.0, 1.0, 0.0, 1.0];
-  hat.matrix.translate(-.2, 0.6, .45);
+  hat.matrix.translate(-.125, 0.5, .5);
   hat.matrix.rotate(-75, 1, 0, 0);
   hat.matrix.scale(0.25, .25, 0.4);
   hat.render();

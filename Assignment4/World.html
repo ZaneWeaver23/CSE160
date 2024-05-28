@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+</head>
+
+
+<body onload="main()">
+
+  <canvas id="webgl" width="600" height="600">
+    Please use a browser that supports "canvas"
+  </canvas>
+
+  <p id="numdot"> XXX </p>
+
+  Normals:
+  <button type="button" id="normal_on">ON</button>
+  <button type="button" id="normal_off">OFF</button>
+  Light:
+  <button type="button" id="light_on">ON</button>
+  <button type="button" id="light_off">OFF</button>
+  <p></p>
+  Light Animation:
+  <button type="button" id="Lon">ON</button>
+  <button type="button" id="Loff">OFF</button>
+  <p>
+    <b>Controls: </b>W = forward | S = back | A = left | D = right | Q = pan left | E = pan right
+  <p>
+    Rotate Camera <input type="range" min="-180" max="180" value="-180" class="slider" id="angleSlide">
+  <p></p>
+  Lighting Color: <input type="range" min="0" max="10" value="10" class="slider" id="bSlide">
+  <p>
+  Move Light:
+  <p></p>
+  X: <input type="range" min="-250" max="250" value="0" class="slider" id="lightX">
+  Y: <input type="range" min="-250" max="250" value="100" class="slider" id="lightY">
+  Z: <input type="range" min="-250" max="250" value="-200" class="slider" id="lightZ">
+
+
+  <script src="lib/webgl-utils.js"></script>
+  <script src="lib/webgl-debug.js"></script>
+  <script src="lib/cuon-utils.js"></script>
+  <script src="lib/cuon-matrix-cse160.js"></script>
+
+  <script src="Triangle.js"></script>
+  <script src="Cube.js"></script>
+  <script src="Prism.js"></script>
+  <script src="World.js"></script>
+  <script src="Camera.js"></script>
+  <script src="Sphere.js"></script>
+
+</body>
+
+</html>

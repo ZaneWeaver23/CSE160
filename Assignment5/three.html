@@ -46,7 +46,7 @@
       const near = 0.1;
       const far = 100;
       const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-      camera.position.set(0, 10, 20);
+      camera.position.set(0, 25, 50);
 
       const controls = new OrbitControls(camera, canvas);
       controls.target.set(0, 5, 0);
@@ -58,7 +58,7 @@
       {
         const planeSize = 40;
         const loader = new THREE.TextureLoader();
-        const texture = loader.load('https://threejs.org/manual/examples/resources/images/checker.png');
+        const texture = loader.load('models/grass.jpg');
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
@@ -73,20 +73,34 @@
         });
         const mesh = new THREE.Mesh(planeGeo, planeMat);
         mesh.rotation.x = Math.PI * -.5;
+        mesh.position.set(0, 0, 0);
         scene.add(mesh);
-        // lighting 
       }
 
       {
         const loader = new THREE.TextureLoader();
-        const texture = loader.load(
-          'https://threejs.org/manual/examples/resources/images/equirectangularmaps/tears_of_steel_bridge_2k.jpg',
-          () => {
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-            texture.colorSpace = THREE.SRGBColorSpace;
+        loader.load(
+          'models/stars.jpg',  // Relative path to the image file
+          (texture) => {
+            texture.mapping = THREE.EquirectangularEncoding;
+            texture.encoding = THREE.sRGBEncoding;
+      
+            // Adjust minification and magnification filtering for less blurriness
+            texture.minFilter = THREE.LinearFilter; // Minification filter
+            texture.magFilter = THREE.LinearFilter; // Magnification filter
+      
             scene.background = texture;
-          });
-        }
+            console.log('Texture loaded successfully.');
+          },
+          undefined,
+          (err) => {
+            console.error('An error occurred loading the texture:', err);
+          }
+        );
+      }
+
+
+
 
       {
         const skyColor = 0xB1E1FF; // light blue
@@ -108,22 +122,826 @@
         const color = 0xFFFDBD;
         const intensity = 10;
         const light = new THREE.DirectionalLight(color, intensity);
-        light.position.set(10, 10, 0);
+        light.position.set(0, 10, 0);
         scene.add(light);
       }
 
       {
         const objLoader = new OBJLoader();
         const mtlLoader = new MTLLoader();
-        mtlLoader.load('https://threejs.org/manual/examples/resources/models/windmill/windmill.mtl', (mtl) => {
-          mtl.preload();
-          mtl.materials.Material.side = THREE.DoubleSide;
+        mtlLoader.load('models/guy.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
           objLoader.setMaterials(mtl);
-          objLoader.load('https://threejs.org/manual/examples/resources/models/windmill/windmill.obj', (root) => {
+          objLoader.load('models/guy.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-12, 2, 15)
             scene.add(root);
           });
         });
       }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/house.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/house.obj', (root) => {
+            root.position.set(10, 7.4, -10)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wzrd.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wzrd.obj', (root) => {
+            root.position.set(-11.75, 6, .75)
+            scene.add(root);
+          });
+        });
+      }
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wzrd.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wzrd.obj', (root) => {
+            root.position.set(11.75, 6, .75)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/bear.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/bear.obj', (root) => {
+            root.rotation.set(0, (270 * (Math.PI / 180)), 0)
+            root.position.set(-9, 1, 10)
+            scene.add(root);
+          });
+        });
+      }
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/bear.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/bear.obj', (root) => {
+            root.rotation.set(0, (270 * (Math.PI / 180)), 0)
+            root.position.set(-15, 1, 10)
+            scene.add(root);
+          });
+        });
+      }
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/bear.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/bear.obj', (root) => {
+            root.rotation.set(0, (270 * (Math.PI / 180)), 0)
+            root.position.set(-12, 1, 10)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/cauldron.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/cauldron.obj', (root) => {
+            root.position.set(12, .5, 10)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/trebuchet.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/trebuchet.obj', (root) => {
+            root.scale.set(3, 3, 3);
+            root.position.set(0, 2.25, 15)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/skeleton.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/skeleton.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(12, 1, 12)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/skeleton.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/skeleton.obj', (root) => {
+            root.rotation.set(0, (220 * (Math.PI / 180)), 0)
+            root.position.set(14, 1, 11)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/skeleton.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/skeleton.obj', (root) => {
+            root.rotation.set(0, (140 * (Math.PI / 180)), 0)
+            root.position.set(10, 1, 11)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 7.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 10)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 12.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 15)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.position.set(17.5, 2.5, 17.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 7.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 10)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 12.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 15)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tree.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tree.obj', (root) => {
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            root.position.set(-17.5, 2.5, 17.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/werewolf.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/werewolf.obj', (root) => {
+            root.rotation.set(0, (270 * (Math.PI / 180)), 0)
+            root.position.set(1, 1, 12)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/king.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/king.obj', (root) => {
+            root.position.set(0, 6, 0)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/tower.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/tower.obj', (root) => {
+            root.position.set(-14, 13.75, -7)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/horse.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/horse.obj', (root) => {
+            root.rotation.set(0, (270 * (Math.PI / 180)), 0)
+            root.position.set(-12, 1, 15)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/queen.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/queen.obj', (root) => {
+            root.position.set(-14, 13, -4.5)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/mound.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/mound.obj', (root) => {
+            root.position.set(-10, 2, -12)
+            root.scale.set(.5, .5, .5);
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wall.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wall.obj', (root) => {
+            root.position.set(-16, 2.25, 3)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wall.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wall.obj', (root) => {
+            root.position.set(-8, 2.25, 3)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wall.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wall.obj', (root) => {
+            root.position.set(0, 2.25, 3)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wall.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wall.obj', (root) => {
+            root.position.set(8, 2.25, 3)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/wall.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/wall.obj', (root) => {
+            root.position.set(16, 2.25, 3)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/watchtower.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/watchtower.obj', (root) => {
+            root.position.set(0, 3, 0)
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/watchtower.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/watchtower.obj', (root) => {
+            root.position.set(12, 3, 0)
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            scene.add(root);
+          });
+        });
+      }
+
+      {
+        const objLoader = new OBJLoader();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('models/watchtower.mtl', (mtl) => {
+          if (mtl.materials) {
+            if (Array.isArray(mtl.materials)) {
+              mtl.materials.forEach((material) => {
+                material.side = THREE.DoubleSide;
+              });
+            } else {
+              mtl.materials.side = THREE.DoubleSide;
+            }
+          }
+          objLoader.setMaterials(mtl);
+          objLoader.load('models/watchtower.obj', (root) => {
+            root.position.set(-12, 3, 0)
+            root.rotation.set(0, (180 * (Math.PI / 180)), 0)
+            scene.add(root);
+          });
+        });
+      }
+
+
 
       function resizeRendererToDisplaySize(renderer) {
         const canvas = renderer.domElement;
@@ -145,21 +963,6 @@
         renderer.render(scene, camera);
         requestAnimationFrame(render);
       }
-
-      function renderCube(time) {
-        time *= 0.001;
-
-        cubes.forEach((cube, ndx) => {
-          const speed = 1 + ndx * .1;
-          const rot = time * speed;
-          cube.rotation.x = rot;
-          cube.rotation.y = rot;
-        });
-        renderer.render(scene, camera);
-        requestAnimationFrame(renderCube)
-      }
-
-      requestAnimationFrame(renderCube)
       requestAnimationFrame(render);
 
       const boxWidth = 1;
@@ -168,40 +971,16 @@
       const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
       function makeInstance(geometry, color, x, y, z) {
-        const material = new THREE.MeshPhongMaterial({color});
+        const material = new THREE.MeshPhongMaterial({ color });
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
         cube.position.x = x;
         cube.position.y = y;
         cube.position.z = z;
-        
+
         return cube;
       }
-
-      const cubes = [
-        makeInstance(geometry, 0x44aa88, 10, 1, 0),
-        makeInstance(geometry, 0xaa8844, -10, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 10, 0),
-        makeInstance(geometry, 0x44aa88, 9, 1, 0),
-        makeInstance(geometry, 0xaa8844, -11, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 11, 0),
-        makeInstance(geometry, 0x44aa88, 8, 1, 0),
-        makeInstance(geometry, 0xaa8844, -12, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 12, 0),
-        makeInstance(geometry, 0x44aa88, 11, 1, 0),
-        makeInstance(geometry, 0xaa8844, -13, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 13, 0),
-        makeInstance(geometry, 0x44aa88, 12, 1, 0),
-        makeInstance(geometry, 0xaa8844, -9, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 14, 0),
-        makeInstance(geometry, 0x44aa88, 13, 1, 0),
-        makeInstance(geometry, 0xaa8844, -8, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 15, 0),
-        makeInstance(geometry, 0x44aa88, 7, 1, 0),
-        makeInstance(geometry, 0xaa8844, -7, 1, 0),
-        makeInstance(geometry, 0x8844aa, 0, 16, 0),
-      ];
     }
 
     main();
